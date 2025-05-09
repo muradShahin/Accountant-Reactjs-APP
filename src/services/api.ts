@@ -42,12 +42,14 @@ export interface Employee {
 }
 
 export interface Transaction {
-    id: number;
+    id?: number;
+    type: 'HR' | 'purchase' | 'sales' | 'other_income';
     amount: number;
-    type: 'income' | 'expense';
-    description: string;
     date: string;
-    employeeId?: number;
+    description: string;
+    company_name?: string;
+    employee_id?: number;
+    employee_name?: string;
 }
 
 export interface AttendanceRecord {
@@ -126,8 +128,13 @@ export const employees = {
 };
 
 export const transactions = {
-    getAll: async () => {
-        const response = await api.get('/transactions');
+    getAll: async (filters?: { startDate?: string; endDate?: string; type?: string }) => {
+        const params = new URLSearchParams();
+        if (filters?.startDate) params.append('startDate', filters.startDate);
+        if (filters?.endDate) params.append('endDate', filters.endDate);
+        if (filters?.type) params.append('type', filters.type);
+        
+        const response = await api.get(`/transactions?${params.toString()}`);
         return response.data;
     },
     create: async (transaction: Omit<Transaction, 'id'>) => {
@@ -140,6 +147,17 @@ export const transactions = {
     },
     delete: async (id: number) => {
         const response = await api.delete(`/transactions/${id}`);
+        return response.data;
+    }
+};
+
+export const balance = {
+    get: async () => {
+        const response = await api.get('/balance');
+        return response.data;
+    },
+    update: async (amount: number) => {
+        const response = await api.post('/balance', { amount });
         return response.data;
     }
 };

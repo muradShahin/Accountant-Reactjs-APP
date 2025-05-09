@@ -6,6 +6,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import TransactionsDashboard from './components/transactions/TransactionsDashboard';
+import AllTransactions from './components/transactions/AllTransactions';
+import BalanceManagement from './components/balance/BalanceManagement';
 import Home from './components/home/Home';
 import HRDashboard from './components/hr/HRDashboard';
 import AuthLayout from './components/layout/AuthLayout';
@@ -71,6 +73,14 @@ function App() {
           <Route
             path="/transactions"
             element={<PrivateRoute element={<TransactionsDashboard />} />}
+          />
+          <Route
+            path="/transactions/all"
+            element={<PrivateRoute element={<AllTransactions />} />}
+          />
+          <Route
+            path="/balance"
+            element={<PrivateRoute element={<BalanceManagement />} />}
           />
           <Route
             path="/hr"
