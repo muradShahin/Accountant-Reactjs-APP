@@ -42,6 +42,7 @@ interface Attendance {
 
 const EmployeeAttendance = ({ employeeId }: EmployeeAttendanceProps) => {
     const [attendance, setAttendance] = useState<Attendance[]>([]);
+    const [loading, setLoading] = useState(true);
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [formData, setFormData] = useState({
         date: new Date().toISOString().split('T')[0],
@@ -56,9 +57,17 @@ const EmployeeAttendance = ({ employeeId }: EmployeeAttendanceProps) => {
     const loadAttendance = async () => {
         try {
             const response = await employees.getAttendance(employeeId);
-            setAttendance(response.data);
+            if (Array.isArray(response)) {
+                setAttendance(response);
+            } else {
+                console.error('Unexpected API response format');
+                setAttendance([]);
+            }
         } catch (error) {
             console.error('Error loading attendance:', error);
+            setAttendance([]);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -98,6 +107,14 @@ const EmployeeAttendance = ({ employeeId }: EmployeeAttendanceProps) => {
         return hours * rate;
     };
 
+    if (loading) {
+        return (
+            <Box sx={{ p: 2 }}>
+                <Typography>Loading attendance records...</Typography>
+            </Box>
+        );
+    }
+
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
@@ -124,21 +141,29 @@ const EmployeeAttendance = ({ employeeId }: EmployeeAttendanceProps) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {attendance.map((record) => (
-                            <TableRow key={record.id}>
-                                <TableCell>
-                                    {format(new Date(record.date), 'MMM dd, yyyy')}
+                        {attendance && attendance.length > 0 ? (
+                            attendance.map((record) => (
+                                <TableRow key={record.id}>
+                                    <TableCell>
+                                        {format(new Date(record.date), 'MMM dd, yyyy')}
+                                    </TableCell>
+                                    <TableCell>{record.status}</TableCell>
+                                    <TableCell>{record.check_in}</TableCell>
+                                    <TableCell>{record.check_out}</TableCell>
+                                    <TableCell>{record.overtime_hours || 0}</TableCell>
+                                    <TableCell>
+                                        ${calculateOvertimePay(record.overtime_hours || 0, record.overtime_rate || 0).toFixed(2)}
+                                    </TableCell>
+                                    <TableCell>{record.notes}</TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={7} align="center">
+                                    No attendance records found
                                 </TableCell>
-                                <TableCell>{record.status}</TableCell>
-                                <TableCell>{record.check_in}</TableCell>
-                                <TableCell>{record.check_out}</TableCell>
-                                <TableCell>{record.overtime_hours || 0}</TableCell>
-                                <TableCell>
-                                    ${calculateOvertimePay(record.overtime_hours || 0, record.overtime_rate || 0).toFixed(2)}
-                                </TableCell>
-                                <TableCell>{record.notes}</TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

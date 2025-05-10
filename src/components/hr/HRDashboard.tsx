@@ -7,20 +7,26 @@ import {
     Button,
     Box,
 } from '@mui/material';
-import { employees } from '../../services/api';
+import { employees, Employee } from '../../services/api';
 import EmployeeList from './EmployeeList';
 import EmployeeForm from './EmployeeForm';
 
 const HRDashboard = () => {
-    const [employeeList, setEmployeeList] = useState([]);
+    const [employeeList, setEmployeeList] = useState<Employee[]>([]);
     const [showAddEmployee, setShowAddEmployee] = useState(false);
 
     const loadEmployees = async () => {
         try {
-            const response = await employees.getAll();
-            setEmployeeList(response.data);
+            const data = await employees.getAll();
+            if (Array.isArray(data)) {
+                setEmployeeList(data);
+            } else {
+                console.error('Unexpected API response format');
+                setEmployeeList([]);
+            }
         } catch (error) {
             console.error('Error loading employees:', error);
+            setEmployeeList([]);
         }
     };
 

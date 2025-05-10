@@ -103,7 +103,7 @@ const EmployeeList = ({ employeeData, onEmployeeUpdated }: EmployeeListProps) =>
                                 <TableCell>
                                     {format(new Date(employee.hire_date), 'MMM dd, yyyy')}
                                 </TableCell>
-                                <TableCell>${employee.base_salary.toFixed(2)}</TableCell>
+                                <TableCell>${employee.base_salary}</TableCell>
                                 <TableCell align="right">
                                     <IconButton
                                         onClick={() => handleEmployeeClick(employee)}
@@ -148,7 +148,7 @@ const EmployeeList = ({ employeeData, onEmployeeUpdated }: EmployeeListProps) =>
                                 <Typography>
                                     Hire Date: {format(new Date(selectedEmployee.hire_date), 'MMMM dd, yyyy')}
                                 </Typography>
-                                <Typography>Base Salary: ${selectedEmployee.base_salary.toFixed(2)}</Typography>
+                                <Typography>Base Salary: ${selectedEmployee.base_salary}</Typography>
 
                                 {balanceInfo && (
                                     <Box sx={{ mt: 3 }}>
@@ -156,10 +156,10 @@ const EmployeeList = ({ employeeData, onEmployeeUpdated }: EmployeeListProps) =>
                                             Current Balance
                                         </Typography>
                                         <Typography>
-                                            Transaction Balance: ${balanceInfo.transaction_balance.toFixed(2)}
+                                            Transaction Balance: ${balanceInfo.transaction_balance}
                                         </Typography>
                                         <Typography>
-                                            Current Balance: ${balanceInfo.current_balance.toFixed(2)}
+                                            Current Balance: ${balanceInfo.current_balance}
                                         </Typography>
                                     </Box>
                                 )}

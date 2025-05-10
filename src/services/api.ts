@@ -36,9 +36,10 @@ api.interceptors.response.use(
 export interface Employee {
     id: number;
     name: string;
+    email: string;
+    hire_date: string;
+    base_salary: number;
     position: string;
-    salary: number;
-    joiningDate: string;
 }
 
 export interface Transaction {
@@ -71,10 +72,9 @@ export interface EmployeeTransaction {
 }
 
 export interface BalanceInfo {
-    totalSalary: number;
-    totalDeductions: number;
-    totalBonus: number;
-    netBalance: number;
+    base_salary: number;
+    transaction_balance: number;
+    current_balance: number;
 }
 
 export const auth = {
@@ -93,7 +93,7 @@ export const employees = {
         const response = await api.get('/employees');
         return response.data;
     },
-    create: async (employee: Omit<Employee, 'id'>) => {
+    create: async (employee: { name: string; email: string; hire_date: string; base_salary: number; position: string; }) => {
         const response = await api.post('/employees', employee);
         return response.data;
     },

@@ -18,17 +18,19 @@ interface EmployeeFormProps {
 
 interface EmployeeFormData {
     name: string;
+    email: string;
     position: string;
-    salary: string;
-    joiningDate: string;
+    base_salary: string;
+    hire_date: string;
 }
 
 const EmployeeForm: React.FC<EmployeeFormProps> = ({ open, onClose, onEmployeeAdded }) => {
     const [formData, setFormData] = useState<EmployeeFormData>({
         name: '',
+        email: '',
         position: '',
-        salary: '',
-        joiningDate: ''
+        base_salary: '',
+        hire_date: new Date().toISOString().split('T')[0]
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -36,15 +38,17 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ open, onClose, onEmployeeAd
         try {
             await employees.create({
                 name: formData.name,
+                email: formData.email,
                 position: formData.position,
-                salary: parseFloat(formData.salary),
-                joiningDate: formData.joiningDate
+                base_salary: parseFloat(formData.base_salary),
+                hire_date: formData.hire_date
             });
             setFormData({
                 name: '',
+                email: '',
                 position: '',
-                salary: '',
-                joiningDate: ''
+                base_salary: '',
+                hire_date: new Date().toISOString().split('T')[0]
             });
             await onEmployeeAdded();
             onClose();
@@ -80,6 +84,17 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ open, onClose, onEmployeeAd
                         margin="normal"
                         required
                         fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
                         id="position"
                         label="Position"
                         name="position"
@@ -90,22 +105,22 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ open, onClose, onEmployeeAd
                         margin="normal"
                         required
                         fullWidth
-                        id="salary"
-                        label="Salary"
-                        name="salary"
+                        id="base_salary"
+                        label="Base Salary"
+                        name="base_salary"
                         type="number"
-                        value={formData.salary}
+                        value={formData.base_salary}
                         onChange={handleChange}
                     />
                     <TextField
                         margin="normal"
                         required
                         fullWidth
-                        id="joiningDate"
-                        label="Joining Date"
-                        name="joiningDate"
+                        id="hire_date"
+                        label="Hire Date"
+                        name="hire_date"
                         type="date"
-                        value={formData.joiningDate}
+                        value={formData.hire_date}
                         onChange={handleChange}
                         InputLabelProps={{
                             shrink: true,

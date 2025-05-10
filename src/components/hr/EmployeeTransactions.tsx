@@ -51,9 +51,15 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
     const loadTransactions = async () => {
         try {
             const response = await employees.getTransactions(employeeId);
-            setTransactions(response.data);
+            if (Array.isArray(response)) {
+                setTransactions(response);
+            } else {
+                console.error('Unexpected API response format');
+                setTransactions([]);
+            }
         } catch (error) {
             console.error('Error loading transactions:', error);
+            setTransactions([]);
         }
     };
 
@@ -111,20 +117,28 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {transactions.map((transaction) => (
-                            <TableRow key={transaction.id}>
-                                <TableCell>
-                                    {format(new Date(transaction.date), 'MMM dd, yyyy')}
-                                </TableCell>
-                                <TableCell>{transaction.type}</TableCell>
-                                <TableCell>{transaction.description}</TableCell>
-                                <TableCell align="right" sx={{
-                                    color: transaction.type === 'deduction' ? 'error.main' : 'success.main'
-                                }}>
-                                    {transaction.type === 'deduction' ? '-' : '+'}${transaction.amount.toFixed(2)}
+                        {transactions && transactions.length > 0 ? (
+                            transactions.map((transaction) => (
+                                <TableRow key={transaction.id}>
+                                    <TableCell>
+                                        {format(new Date(transaction.date), 'MMM dd, yyyy')}
+                                    </TableCell>
+                                    <TableCell>{transaction.type}</TableCell>
+                                    <TableCell>{transaction.description}</TableCell>
+                                    <TableCell align="right" sx={{
+                                        color: transaction.type === 'deduction' ? 'error.main' : 'success.main'
+                                    }}>
+                                        {transaction.type === 'deduction' ? '-' : '+'}${transaction.amount}
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={4} align="center">
+                                    No transactions found
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
