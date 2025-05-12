@@ -138,22 +138,22 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
                                 <TableCell>
                                     {format(new Date(transaction.date), 'MMM dd, yyyy')}
                                 </TableCell>
-                                <TableCell>{transaction.type}</TableCell>
+                                <TableCell>{transaction.transaction_type}</TableCell>
                                 <TableCell>{transaction.description}</TableCell>
                                 <TableCell>
-                                    {transaction.type === 'HR' && transaction.employee_name
+                                    {transaction.transaction_type === 'HR' && transaction.employee_name
                                         ? `Employee: ${transaction.employee_name}`
                                         : transaction.company_name || '-'}
                                 </TableCell>
                                 <TableCell 
                                     align="right" 
                                     sx={{ 
-                                        color: (transaction.type === 'HR' || transaction.type === 'purchase') 
+                                        color: (transaction.transaction_type === 'HR' || transaction.transaction_type === 'purchase') 
                                             ? 'error.main' 
                                             : 'success.main'
                                     }}
                                 >
-                                    {(transaction.type === 'HR' || transaction.type === 'purchase') ? '-' : '+'}
+                                    {(transaction.transaction_type === 'HR' || transaction.transaction_type === 'purchase') ? '-' : '+'}
                                     ${transaction.amount}
                                 </TableCell>
                                 {!limit && (

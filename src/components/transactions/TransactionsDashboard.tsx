@@ -78,7 +78,7 @@ const TransactionsDashboard: React.FC = () => {
                         <Typography component="h2" variant="h6" color="primary" gutterBottom>
                             Recent Transactions
                         </Typography>
-                        <TransactionList limit={5} />
+                        <TransactionList limit={10} />
                     </Paper>
                 </Grid>
             </Grid>

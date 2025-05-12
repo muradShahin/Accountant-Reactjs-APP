@@ -27,6 +27,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
     const [formData, setFormData] = useState<Omit<Transaction, 'id'>>({
         amount: 0,
         type: 'HR',
+        transaction_type: 'HR',
         description: '',
         date: new Date().toISOString().split('T')[0],
         company_name: '',
@@ -57,6 +58,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
             setFormData({
                 amount: 0,
                 type: 'HR',
+                transaction_type: 'HR',
                 description: '',
                 date: new Date().toISOString().split('T')[0],
                 company_name: '',
@@ -76,6 +78,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
             setFormData(prev => ({
                 ...prev,
                 [name]: value ? Number(value) : undefined
+            }));
+        } else if (name === 'type') {
+            setFormData(prev => ({
+                ...prev,
+                type: value as Transaction['type'],
+                transaction_type: value as Transaction['transaction_type']
             }));
         } else {
             setFormData(prev => ({

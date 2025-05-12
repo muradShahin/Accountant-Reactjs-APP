@@ -44,13 +44,16 @@ export interface Employee {
 
 export interface Transaction {
     id?: number;
-    type: 'HR' | 'purchase' | 'sales' | 'other_income';
+    type?: 'HR' | 'purchase' | 'sales' | 'other_income';
+    transaction_type: 'HR' | 'purchase' | 'sales' | 'other_income';
     amount: number;
     date: string;
     description: string;
     company_name?: string;
     employee_id?: number;
     employee_name?: string;
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface AttendanceRecord {
@@ -130,15 +133,20 @@ export const employees = {
 export const transactions = {
     getAll: async (filters?: { startDate?: string; endDate?: string; type?: string }) => {
         const params = new URLSearchParams();
+        console.log('Filters:', filters);
         if (filters?.startDate) params.append('startDate', filters.startDate);
         if (filters?.endDate) params.append('endDate', filters.endDate);
-        if (filters?.type) params.append('type', filters.type);
+        if (filters?.type) params.append('transaction_type', filters.type);
         
         const response = await api.get(`/transactions?${params.toString()}`);
         return response.data;
     },
     create: async (transaction: Omit<Transaction, 'id'>) => {
-        const response = await api.post('/transactions', transaction);
+        const transformedTransaction = {
+            ...transaction,
+            transaction_type: transaction.type || transaction.transaction_type
+        };
+        const response = await api.post('/transactions', transformedTransaction);
         return response.data;
     },
     update: async (id: number, transaction: Partial<Transaction>) => {
