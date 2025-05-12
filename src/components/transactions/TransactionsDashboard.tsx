@@ -4,8 +4,10 @@ import TransactionList from './TransactionList';
 import TransactionForm from './TransactionForm';
 import { balance } from '../../services/api';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const TransactionsDashboard: React.FC = () => {
+    const { t } = useTranslation();
     const [companyBalance, setCompanyBalance] = useState<number>(0);
     const [loading, setLoading] = useState(true);
 
@@ -32,7 +34,7 @@ const TransactionsDashboard: React.FC = () => {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h4" component="h1">
-                    Transactions Management
+                    {t('common.transactions')}
                 </Typography>
                 <Button
                     component={Link}
@@ -40,7 +42,7 @@ const TransactionsDashboard: React.FC = () => {
                     variant="outlined"
                     color="primary"
                 >
-                    View All Transactions
+                    {t('common.viewAllTransactions')}
                 </Button>
             </Box>
 
@@ -48,10 +50,10 @@ const TransactionsDashboard: React.FC = () => {
                 <Grid item xs={12} md={4}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 140 }}>
                         <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                            Company Balance
+                            {t('common.companyBalance')}
                         </Typography>
                         <Typography component="p" variant="h4" sx={{ flexGrow: 1 }}>
-                            {loading ? 'Loading...' : `$${companyBalance}`}
+                            {loading ? t('common.loading') : `$${companyBalance}`}
                         </Typography>
                         <Button
                             component={Link}
@@ -59,7 +61,7 @@ const TransactionsDashboard: React.FC = () => {
                             size="small"
                             color="primary"
                         >
-                            Manage Balance
+                            {t('common.manageBalance')}
                         </Button>
                     </Paper>
                 </Grid>
@@ -67,7 +69,7 @@ const TransactionsDashboard: React.FC = () => {
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                            Add New Transaction
+                            {t('common.addTransaction')}
                         </Typography>
                         <TransactionForm onTransactionAdded={handleTransactionAdded} />
                     </Paper>
@@ -76,7 +78,7 @@ const TransactionsDashboard: React.FC = () => {
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                            Recent Transactions
+                            {t('common.recentTransactions')}
                         </Typography>
                         <TransactionList limit={10} />
                     </Paper>

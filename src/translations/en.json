@@ -1,0 +1,51 @@
+{
+  "common": {
+    "date": "Date",
+    "type": "Type",
+    "description": "Description",
+    "details": "Details",
+    "amount": "Amount",
+    "actions": "Actions",
+    "addTransaction": "Add Transaction",
+    "companyBalance": "Company Balance",
+    "recentTransactions": "Recent Transactions",
+    "viewAllTransactions": "View All Transactions",
+    "noTransactionsFound": "No transactions found",
+    "employee": "Employee",
+    "companyName": "Company Name",
+    "required": "Required",
+    "optional": "Optional",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "all": "All",
+    "logout": "Logout",
+    "switchToArabic": "Switch to Arabic",
+    "switchToEnglish": "Switch to English",
+    "smartAccountant": "Smart Accountant"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "hrManagement": "HR Management",
+    "balance": "Balance"
+  },
+  "dashboard": {
+    "welcome": "Welcome to Smart Accountant",
+    "transactions": {
+      "title": "Transactions",
+      "description": "Manage your business transactions, track income and expenses"
+    },
+    "hrManagement": {
+      "title": "HR Management",
+      "description": "Manage employees, attendance, and payroll"
+    }
+  },
+  "transactions": {
+    "HR": "HR",
+    "purchase": "Purchase",
+    "sales": "Sales",
+    "other_income": "Other Income"
+  }
+}

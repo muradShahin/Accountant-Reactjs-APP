@@ -12,6 +12,7 @@ import {
     InputLabel,
     SelectChangeEvent
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { transactions, employees, Transaction } from '../../services/api';
 
 interface TransactionFormProps {
@@ -24,6 +25,7 @@ interface Employee {
 }
 
 const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState<Omit<Transaction, 'id'>>({
         amount: 0,
         type: 'HR',
@@ -100,7 +102,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
                 required
                 fullWidth
                 id="date"
-                label="Date"
+                label={t('common.date')}
                 name="date"
                 type="date"
                 value={formData.date}
@@ -114,39 +116,39 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
                 required
                 fullWidth
                 id="amount"
-                label="Amount"
+                label={t('common.amount')}
                 name="amount"
                 type="number"
                 value={formData.amount}
                 onChange={handleChange}
             />
             <FormControl fullWidth margin="normal">
-                <InputLabel id="type-label">Type</InputLabel>
+                <InputLabel id="type-label">{t('common.type')}</InputLabel>
                 <Select
                     labelId="type-label"
                     id="type"
                     name="type"
                     value={formData.type}
-                    label="Type"
-                    onChange={handleChange}
+                    label={t('common.type')}
+                    onChange={handleChange as (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void}
                 >
-                    <MenuItem value="HR">HR</MenuItem>
-                    <MenuItem value="purchase">Purchase</MenuItem>
-                    <MenuItem value="sales">Sales</MenuItem>
-                    <MenuItem value="other_income">Other Income</MenuItem>
+                    <MenuItem value="HR">{t('transactions.HR')}</MenuItem>
+                    <MenuItem value="purchase">{t('transactions.purchase')}</MenuItem>
+                    <MenuItem value="sales">{t('transactions.sales')}</MenuItem>
+                    <MenuItem value="other_income">{t('transactions.other_income')}</MenuItem>
                 </Select>
             </FormControl>
 
             {formData.type === 'HR' && (
                 <FormControl fullWidth margin="normal">
-                    <InputLabel id="employee-label">Employee</InputLabel>
+                    <InputLabel id="employee-label">{t('common.employee')}</InputLabel>
                     <Select
                         labelId="employee-label"
                         id="employee_id"
                         name="employee_id"
                         value={formData.employee_id?.toString() || ''}
-                        label="Employee"
-                        onChange={handleChange}
+                        label={t('common.employee')}
+                        onChange={handleChange as (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void}
                         required
                     >
                         {employeesList.map(employee => (
@@ -163,7 +165,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
                     margin="normal"
                     fullWidth
                     id="company_name"
-                    label="Company Name (Optional)"
+                    label={`${t('common.companyName')} (${t('common.optional')})`}
                     name="company_name"
                     value={formData.company_name}
                     onChange={handleChange}
@@ -175,7 +177,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
                 required
                 fullWidth
                 id="description"
-                label="Description"
+                label={t('common.description')}
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
@@ -187,7 +189,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
             >
-                Add Transaction
+                {t('common.addTransaction')}
             </Button>
         </Box>
     );

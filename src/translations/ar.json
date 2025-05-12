@@ -1,0 +1,51 @@
+{
+  "common": {
+    "date": "التاريخ",
+    "type": "النوع",
+    "description": "الوصف",
+    "details": "التفاصيل",
+    "amount": "المبلغ",
+    "actions": "الإجراءات",
+    "addTransaction": "إضافة معاملة",
+    "companyBalance": "رصيد الشركة",
+    "recentTransactions": "المعاملات الأخيرة",
+    "viewAllTransactions": "عرض جميع المعاملات",
+    "noTransactionsFound": "لم يتم العثور على معاملات",
+    "employee": "الموظف",
+    "companyName": "اسم الشركة",
+    "required": "مطلوب",
+    "optional": "اختياري",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "all": "الكل",
+    "logout": "تسجيل الخروج",
+    "switchToArabic": "التبديل إلى العربية",
+    "switchToEnglish": "Switch to English",
+    "smartAccountant": "المحاسب الذكي"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "transactions": "المعاملات",
+    "hrManagement": "إدارة الموارد البشرية",
+    "balance": "الرصيد"
+  },
+  "dashboard": {
+    "welcome": "مرحباً بك في المحاسب الذكي",
+    "transactions": {
+      "title": "المعاملات",
+      "description": "إدارة معاملات الأعمال وتتبع الدخل والنفقات"
+    },
+    "hrManagement": {
+      "title": "إدارة الموارد البشرية",
+      "description": "إدارة الموظفين والحضور والرواتب"
+    }
+  },
+  "transactions": {
+    "HR": "الموارد البشرية",
+    "purchase": "مشتريات",
+    "sales": "مبيعات",
+    "other_income": "دخل آخر"
+  }
+}

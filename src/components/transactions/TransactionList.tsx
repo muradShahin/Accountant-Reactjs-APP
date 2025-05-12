@@ -20,6 +20,7 @@ import {
 import { format } from 'date-fns';
 import { transactions, Transaction } from '../../services/api';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 
 interface TransactionListProps {
     limit?: number;
@@ -32,6 +33,7 @@ interface Filters {
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
+    const { t } = useTranslation();
     const [transactionList, setTransactionList] = useState<Transaction[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [filters, setFilters] = useState<Filters>({
@@ -87,7 +89,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
             {!limit && (
                 <Box sx={{ mb: 3, display: 'flex', gap: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t('common.startDate')}
                         type="date"
                         name="startDate"
                         value={filters.startDate}
@@ -95,7 +97,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
                         InputLabelProps={{ shrink: true }}
                     />
                     <TextField
-                        label="End Date"
+                        label={t('common.endDate')}
                         type="date"
                         name="endDate"
                         value={filters.endDate}
@@ -103,18 +105,18 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
                         InputLabelProps={{ shrink: true }}
                     />
                     <FormControl sx={{ minWidth: 200 }}>
-                        <InputLabel>Type</InputLabel>
+                        <InputLabel>{t('common.type')}</InputLabel>
                         <Select
                             name="type"
                             value={filters.type}
-                            label="Type"
+                            label={t('common.type')}
                             onChange={handleFilterChange}
                         >
-                            <MenuItem value="">All</MenuItem>
-                            <MenuItem value="HR">HR</MenuItem>
-                            <MenuItem value="purchase">Purchase</MenuItem>
-                            <MenuItem value="sales">Sales</MenuItem>
-                            <MenuItem value="other_income">Other Income</MenuItem>
+                            <MenuItem value="">{t('common.all')}</MenuItem>
+                            <MenuItem value="HR">{t('transactions.HR')}</MenuItem>
+                            <MenuItem value="purchase">{t('transactions.purchase')}</MenuItem>
+                            <MenuItem value="sales">{t('transactions.sales')}</MenuItem>
+                            <MenuItem value="other_income">{t('transactions.other_income')}</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
@@ -124,12 +126,12 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Details</TableCell>
-                            <TableCell align="right">Amount</TableCell>
-                            {!limit && <TableCell>Actions</TableCell>}
+                            <TableCell>{t('common.date')}</TableCell>
+                            <TableCell>{t('common.type')}</TableCell>
+                            <TableCell>{t('common.description')}</TableCell>
+                            <TableCell>{t('common.details')}</TableCell>
+                            <TableCell align="right">{t('common.amount')}</TableCell>
+                            {!limit && <TableCell>{t('common.actions')}</TableCell>}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -138,11 +140,11 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
                                 <TableCell>
                                     {format(new Date(transaction.date), 'MMM dd, yyyy')}
                                 </TableCell>
-                                <TableCell>{transaction.transaction_type}</TableCell>
+                                <TableCell>{t(`transactions.${transaction.transaction_type}`)}</TableCell>
                                 <TableCell>{transaction.description}</TableCell>
                                 <TableCell>
                                     {transaction.transaction_type === 'HR' && transaction.employee_name
-                                        ? `Employee: ${transaction.employee_name}`
+                                        ? `${t('common.employee')}: ${transaction.employee_name}`
                                         : transaction.company_name || '-'}
                                 </TableCell>
                                 <TableCell 
@@ -172,7 +174,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ limit }) => {
                         {transactionList.length === 0 && (
                             <TableRow>
                                 <TableCell colSpan={6} align="center">
-                                    No transactions found
+                                    {t('common.noTransactionsFound')}
                                 </TableCell>
                             </TableRow>
                         )}
