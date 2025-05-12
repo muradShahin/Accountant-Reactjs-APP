@@ -13,7 +13,8 @@ import {
     ListItemIcon,
     ListItemText,
     Divider,
-    Tooltip
+    Tooltip,
+    useTheme
 } from '@mui/material';
 import {
     Menu as MenuIcon,
@@ -38,6 +39,8 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, toggleLanguage, curre
     const location = useLocation();
     const [drawerOpen, setDrawerOpen] = useState(false);
     const { t } = useTranslation();
+    const theme = useTheme();
+    const isRTL = theme.direction === 'rtl';
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -57,64 +60,144 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, toggleLanguage, curre
     };
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <AppBar position="fixed">
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <AppBar 
+                position="fixed" 
+                sx={{ 
+                    width: '100%',
+                    ...(isRTL ? { right: 0 } : { left: 0 })
+                }}
+            >
                 <Toolbar>
                     <IconButton
-                        edge="start"
+                        size="large"
                         color="inherit"
                         onClick={() => setDrawerOpen(true)}
-                        sx={{ mr: 2 }}
+                        sx={{ 
+                            ...(isRTL ? { ml: 2 } : { mr: 2 }),
+                            ...(isRTL ? { marginRight: 'auto' } : { marginLeft: 0 })
+                        }}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography 
+                        variant="h6" 
+                        component="div" 
+                        sx={{ 
+                            flexGrow: 1,
+                            textAlign: isRTL ? 'right' : 'left',
+                            marginRight: isRTL ? 2 : 0,
+                            marginLeft: isRTL ? 0 : 2
+                        }}
+                    >
                         {getPageTitle()}
                     </Typography>
-                    <Tooltip title={currentLanguage === 'ar' ? t('common.switchToEnglish') : t('common.switchToArabic')}>
-                        <IconButton color="inherit" onClick={toggleLanguage}>
-                            <LanguageIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />}>
-                        {t('common.logout')}
-                    </Button>
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        flexDirection: isRTL ? 'row-reverse' : 'row'
+                    }}>
+                        <Tooltip title={currentLanguage === 'ar' ? t('common.switchToEnglish') : t('common.switchToArabic')}>
+                            <IconButton color="inherit" onClick={toggleLanguage}>
+                                <LanguageIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Button 
+                            color="inherit" 
+                            onClick={handleLogout} 
+                            startIcon={!isRTL ? <LogoutIcon /> : undefined}
+                            endIcon={isRTL ? <LogoutIcon /> : undefined}
+                        >
+                            {t('common.logout')}
+                        </Button>
+                    </Box>
                 </Toolbar>
             </AppBar>
+
             <Drawer
-                anchor="left"
+                anchor={isRTL ? 'right' : 'left'}
                 open={drawerOpen}
                 onClose={() => setDrawerOpen(false)}
+                PaperProps={{
+                    sx: {
+                        width: 250,
+                        ...(isRTL ? { right: 0 } : { left: 0 })
+                    }
+                }}
             >
-                <Box sx={{ width: 250 }}>
+                <Box sx={{ width: 250 }} role="presentation">
                     <List>
                         {menuItems.map((item) => (
                             <ListItem 
-                                button 
                                 key={item.text}
                                 onClick={() => {
                                     navigate(item.path);
                                     setDrawerOpen(false);
                                 }}
                                 selected={location.pathname === item.path}
+                                sx={{
+                                    flexDirection: isRTL ? 'row-reverse' : 'row',
+                                    paddingRight: isRTL ? 2 : 3,
+                                    paddingLeft: isRTL ? 3 : 2
+                                }}
                             >
-                                <ListItemIcon>
+                                <ListItemIcon sx={{
+                                    minWidth: 40,
+                                    ...(isRTL && {
+                                        marginLeft: '8px',
+                                        marginRight: '-4px'
+                                    })
+                                }}>
                                     {item.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={item.text} />
+                                <ListItemText 
+                                    primary={item.text}
+                                    sx={{
+                                        textAlign: isRTL ? 'right' : 'left',
+                                        margin: 0
+                                    }}
+                                />
                             </ListItem>
                         ))}
                         <Divider />
-                        <ListItem button onClick={handleLogout}>
-                            <ListItemIcon>
+                        <ListItem 
+                            onClick={handleLogout}
+                            sx={{
+                                flexDirection: isRTL ? 'row-reverse' : 'row',
+                                paddingRight: isRTL ? 2 : 3,
+                                paddingLeft: isRTL ? 3 : 2
+                            }}
+                        >
+                            <ListItemIcon sx={{
+                                minWidth: 40,
+                                ...(isRTL && {
+                                    marginLeft: '8px',
+                                    marginRight: '-4px'
+                                })
+                            }}>
                                 <LogoutIcon />
                             </ListItemIcon>
-                            <ListItemText primary={t('common.logout')} />
+                            <ListItemText 
+                                primary={t('common.logout')}
+                                sx={{
+                                    textAlign: isRTL ? 'right' : 'left',
+                                    margin: 0
+                                }}
+                            />
                         </ListItem>
                     </List>
                 </Box>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 8 }}>
+
+            <Box 
+                component="main" 
+                sx={{ 
+                    flexGrow: 1, 
+                    p: 3, 
+                    mt: 8,
+                    ...(isRTL ? { marginRight: 0 } : { marginLeft: 0 })
+                }}
+            >
                 {children}
             </Box>
         </Box>

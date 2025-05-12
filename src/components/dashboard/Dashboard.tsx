@@ -1,14 +1,15 @@
 import React from 'react';
 import { Box, Typography, Container, Grid, Paper, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom>
-                Welcome to Smart Accountant
+                {t("dashboard.welcome")}
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
@@ -26,10 +27,10 @@ const Dashboard: React.FC = () => {
                         onClick={() => navigate('/transactions')}
                     >
                         <Typography variant="h5" gutterBottom>
-                            Transactions
+                            {t('common.transactions')}
                         </Typography>
                         <Typography color="text.secondary" align="center">
-                            Manage your business transactions, track income and expenses
+                            {t("dashboard.transactions.description")}
                         </Typography>
                         <Button
                             variant="contained"
@@ -58,10 +59,10 @@ const Dashboard: React.FC = () => {
                         onClick={() => navigate('/hr')}
                     >
                         <Typography variant="h5" gutterBottom>
-                            HR Management
+                            {t("navigation.hrManagement")}
                         </Typography>
                         <Typography color="text.secondary" align="center">
-                            Manage employees, attendance, and payroll
+                            {t("dashboard.hrManagement.description")}
                         </Typography>
                         <Button
                             variant="contained"

@@ -1,5 +1,6 @@
 {
   "common": {
+    "allTransactions": "جميع المعاملات ",
     "date": "التاريخ",
     "type": "النوع",
     "description": "الوصف",
@@ -23,7 +24,22 @@
     "logout": "تسجيل الخروج",
     "switchToArabic": "التبديل إلى العربية",
     "switchToEnglish": "Switch to English",
-    "smartAccountant": "المحاسب الذكي"
+    "smartAccountant": "المحاسب الذكي",
+    "manageBalance": "إدارة الرصيد",
+    "selectEmployee": "اختر الموظف",
+    "selectDate": "اختر التاريخ",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "filter": "تصفية",
+    "search": "بحث",
+    "status": "الحالة",
+    "success": "تم بنجاح",
+    "error": "خطأ",
+    "warning": "تحذير",
+    "info": "معلومات",
+    "loading": "جاري التحميل...",
+    "transactions": "المعاملات"
   },
   "navigation": {
     "dashboard": "لوحة التحكم",
@@ -40,12 +56,52 @@
     "hrManagement": {
       "title": "إدارة الموارد البشرية",
       "description": "إدارة الموظفين والحضور والرواتب"
-    }
+    },
+    "balance": {
+      "title": "الرصيد",
+      "description": "إدارة رصيد الشركة والتقارير المالية"
+    },
+    "goTrans": "",
+    "goHr": "",
+    "quickActions": "إجراءات سريعة",
+    "statistics": "الإحصائيات",
+    "recentActivity": "النشاط الأخير"
   },
   "transactions": {
     "HR": "الموارد البشرية",
     "purchase": "مشتريات",
     "sales": "مبيعات",
-    "other_income": "دخل آخر"
+    "other_income": "دخل آخر",
+    "title": "المعاملات",
+    "newTransaction": "معاملة جديدة",
+    "editTransaction": "تعديل المعاملة",
+    "deleteTransaction": "حذف المعاملة",
+    "transactionDetails": "تفاصيل المعاملة",
+    "transactionType": "نوع المعاملة",
+    "transactionDate": "تاريخ المعاملة",
+    "filterTransactions": "تصفية المعاملات",
+    "totalAmount": "المبلغ الإجمالي",
+    "status": {
+      "pending": "قيد الانتظار",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    }
+  },
+  "hr": {
+    "employees": "الموظفين",
+    "attendance": "الحضور",
+    "payroll": "الرواتب",
+    "newEmployee": "موظف جديد",
+    "editEmployee": "تعديل بيانات الموظف",
+    "deleteEmployee": "حذف الموظف",
+    "employeeDetails": "تفاصيل الموظف",
+    "employeeList": "قائمة الموظفين",
+    "employeeName": "اسم الموظف",
+    "position": "المنصب",
+    "department": "القسم",
+    "salary": "الراتب",
+    "joiningDate": "تاريخ الانضمام",
+    "status": "الحالة",
+    "actions": "الإجراءات"
   }
 }

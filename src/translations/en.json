@@ -1,5 +1,6 @@
 {
   "common": {
+    "allTransactions": "All Transactions",
     "date": "Date",
     "type": "Type",
     "description": "Description",
@@ -10,7 +11,7 @@
     "companyBalance": "Company Balance",
     "recentTransactions": "Recent Transactions",
     "viewAllTransactions": "View All Transactions",
-    "noTransactionsFound": "No transactions found",
+    "noTransactionsFound": "No Transactions Found",
     "employee": "Employee",
     "companyName": "Company Name",
     "required": "Required",
@@ -23,7 +24,22 @@
     "logout": "Logout",
     "switchToArabic": "Switch to Arabic",
     "switchToEnglish": "Switch to English",
-    "smartAccountant": "Smart Accountant"
+    "smartAccountant": "Smart Accountant",
+    "manageBalance": "Manage Balance",
+    "selectEmployee": "Select Employee",
+    "selectDate": "Select Date",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "filter": "Filter",
+    "search": "Search",
+    "status": "Status",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "loading": "Loading...",
+    "transactions": "Transactions"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -40,12 +56,50 @@
     "hrManagement": {
       "title": "HR Management",
       "description": "Manage employees, attendance, and payroll"
-    }
+    },
+    "balance": {
+      "title": "Balance",
+      "description": "Manage company balance and financial reports"
+    },
+    "quickActions": "Quick Actions",
+    "statistics": "Statistics",
+    "recentActivity": "Recent Activity"
   },
   "transactions": {
     "HR": "HR",
     "purchase": "Purchase",
     "sales": "Sales",
-    "other_income": "Other Income"
+    "other_income": "Other Income",
+    "title": "Transactions",
+    "newTransaction": "New Transaction",
+    "editTransaction": "Edit Transaction",
+    "deleteTransaction": "Delete Transaction",
+    "transactionDetails": "Transaction Details",
+    "transactionType": "Transaction Type",
+    "transactionDate": "Transaction Date",
+    "filterTransactions": "Filter Transactions",
+    "totalAmount": "Total Amount",
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "hr": {
+    "employees": "Employees",
+    "attendance": "Attendance",
+    "payroll": "Payroll",
+    "newEmployee": "New Employee",
+    "editEmployee": "Edit Employee",
+    "deleteEmployee": "Delete Employee",
+    "employeeDetails": "Employee Details",
+    "employeeList": "Employee List",
+    "employeeName": "Employee Name",
+    "position": "Position",
+    "department": "Department",
+    "salary": "Salary",
+    "joiningDate": "Joining Date",
+    "status": "Status",
+    "actions": "Actions"
   }
 }

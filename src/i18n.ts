@@ -7,14 +7,21 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      en: enTranslations,
-      ar: arTranslations,
+      en: {
+        translation: enTranslations
+      },
+      ar: {
+        translation: arTranslations
+      }
     },
-    lng: 'en', // Default language
+    lng: localStorage.getItem('language') || 'en', // Get saved language or use English as default
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
+    react: {
+      useSuspense: false // This helps avoid issues during loading
+    }
   });
 
 export default i18n;

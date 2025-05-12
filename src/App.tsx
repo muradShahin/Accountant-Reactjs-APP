@@ -130,7 +130,7 @@ function App() {
                 element={<PrivateRoute element={<BalanceManagement />} />}
               />
               <Route
-                path="/hr-dashboard"
+                path="/hr"
                 element={<PrivateRoute element={<HRDashboard />} />}
               />
             </Routes>
