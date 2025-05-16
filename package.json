@@ -54,5 +54,10 @@
   "devDependencies": {
     "@types/stylis": "^4.2.7",
     "stylis-plugin-rtl": "^2.1.1"
-  }
+  },
+  "engines": {
+  "node": "16.x",
+  "npm": "8.x"
+}
+
 }
