@@ -39,7 +39,11 @@
     "warning": "Warning",
     "info": "Info",
     "loading": "Loading...",
-    "transactions": "Transactions"
+    "total": "Total",
+    "transactions": "transactions",
+    "page": "Page",
+    "of": "of",
+    "itemsPerPage": "Items per page"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -66,7 +70,7 @@
     "recentActivity": "Recent Activity"
   },
   "transactions": {
-    "HR": "HR",
+    "HR": "Salary",
     "purchase": "Purchase",
     "sales": "Sales",
     "other_income": "Other Income",
@@ -79,6 +83,21 @@
     "transactionDate": "Transaction Date",
     "filterTransactions": "Filter Transactions",
     "totalAmount": "Total Amount",
+    "deduction" : "Deduction",
+    "salary": "Salary",
+    "income": "Income",
+    "expense": "Expense",
+    "transactionStatus": "Transaction Status",
+    "transactionList": "Transaction List",
+    "transactionName": "Transaction Name",
+    "transactionDescription": "Transaction Description",
+    "transactionCategory": "Transaction Category",
+    "transactionAmount": "Transaction Amount",
+    "transactionActions": "Transaction Actions",
+    "transactionTime": "Transaction Time",
+    "transactionHistory": "Transaction History",
+    "transactionNotes": "Transaction Notes",
+    
     "status": {
       "pending": "Pending",
       "completed": "Completed",

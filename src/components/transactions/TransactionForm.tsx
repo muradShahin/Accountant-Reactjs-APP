@@ -28,8 +28,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
     const { t } = useTranslation();
     const [formData, setFormData] = useState<Omit<Transaction, 'id'>>({
         amount: 0,
-        type: 'HR',
-        transaction_type: 'HR',
+        type: 'salary',
+        transaction_type: 'salary',
         description: '',
         date: new Date().toISOString().split('T')[0],
         company_name: '',
@@ -59,8 +59,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
             });
             setFormData({
                 amount: 0,
-                type: 'HR',
-                transaction_type: 'HR',
+                type: 'salary',
+                transaction_type: 'salary',
                 description: '',
                 date: new Date().toISOString().split('T')[0],
                 company_name: '',
@@ -132,14 +132,17 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onTransactionAdded })
                     label={t('common.type')}
                     onChange={handleChange as (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void}
                 >
-                    <MenuItem value="HR">{t('transactions.HR')}</MenuItem>
+                     <MenuItem value="deduction">{t('transactions.deduction')}</MenuItem>
+                    <MenuItem value="income">{t('transactions.income')}</MenuItem>
+                    <MenuItem value="expense">{t('transactions.expense')}</MenuItem>
+                    <MenuItem value="salary">{t('transactions.salary')}</MenuItem>
                     <MenuItem value="purchase">{t('transactions.purchase')}</MenuItem>
                     <MenuItem value="sales">{t('transactions.sales')}</MenuItem>
                     <MenuItem value="other_income">{t('transactions.other_income')}</MenuItem>
                 </Select>
             </FormControl>
 
-            {formData.type === 'HR' && (
+            {formData.type === 'salary' && (
                 <FormControl fullWidth margin="normal">
                     <InputLabel id="employee-label">{t('common.employee')}</InputLabel>
                     <Select

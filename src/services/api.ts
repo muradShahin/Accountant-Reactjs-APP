@@ -44,8 +44,8 @@ export interface Employee {
 
 export interface Transaction {
     id?: number;
-    type?: 'HR' | 'purchase' | 'sales' | 'other_income';
-    transaction_type: 'HR' | 'purchase' | 'sales' | 'other_income';
+    type?: 'salary' | 'purchase' | 'sales' | 'other_income';
+    transaction_type: 'salary' | 'purchase' | 'sales' | 'other_income' | 'deduction';
     amount: number;
     date: string;
     description: string;
@@ -78,6 +78,20 @@ export interface BalanceInfo {
     base_salary: number;
     transaction_balance: number;
     current_balance: number;
+}
+
+export interface PaginationInfo {
+    currentPage: number;
+    pageSize: number;
+    totalPages: number;
+    totalRecords: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+}
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    pagination: PaginationInfo;
 }
 
 export const auth = {
@@ -116,8 +130,15 @@ export const employees = {
         const response = await api.post(`/employees/${employeeId}/attendance`, attendance);
         return response.data;
     },
-    getTransactions: async (employeeId: number) => {
-        const response = await api.get(`/employees/${employeeId}/transactions`);
+    getTransactions: async (employeeId: number, params?: { page?: number; limit?: number; }) => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('employee_id', employeeId.toString());
+        
+        // Add pagination parameters
+        if (params?.page) queryParams.append('page', params.page.toString());
+        if (params?.limit) queryParams.append('limit', params.limit.toString());
+        
+        const response = await api.get<PaginatedResponse<EmployeeTransaction>>(`/transactions?${queryParams.toString()}`);
         return response.data;
     },
     addTransaction: async (employeeId: number, transaction: Omit<EmployeeTransaction, 'id' | 'employeeId'>) => {
@@ -131,14 +152,25 @@ export const employees = {
 };
 
 export const transactions = {
-    getAll: async (filters?: { startDate?: string; endDate?: string; type?: string }) => {
-        const params = new URLSearchParams();
-        console.log('Filters:', filters);
-        if (filters?.startDate) params.append('startDate', filters.startDate);
-        if (filters?.endDate) params.append('endDate', filters.endDate);
-        if (filters?.type) params.append('transaction_type', filters.type);
+    getAll: async (params?: {
+        page?: number;
+        limit?: number;
+        startDate?: string;
+        endDate?: string;
+        type?: string;
+    }) => {
+        const queryParams = new URLSearchParams();
         
-        const response = await api.get(`/transactions?${params.toString()}`);
+        // Add pagination parameters
+        if (params?.page) queryParams.append('page', params.page.toString());
+        if (params?.limit) queryParams.append('limit', (params.limit || 10).toString());
+        
+        // Add filters
+        if (params?.startDate) queryParams.append('startDate', params.startDate);
+        if (params?.endDate) queryParams.append('endDate', params.endDate);
+        if (params?.type) queryParams.append('transaction_type', params.type);
+        
+        const response = await api.get<PaginatedResponse<Transaction>>(`/transactions?${queryParams.toString()}`);
         return response.data;
     },
     create: async (transaction: Omit<Transaction, 'id'>) => {

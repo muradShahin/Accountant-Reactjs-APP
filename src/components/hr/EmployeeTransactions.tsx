@@ -19,10 +19,11 @@ import {
     Select,
     MenuItem,
     FormControl,
-    InputLabel
+    InputLabel,
+    TablePagination
 } from '@mui/material';
 import { format } from 'date-fns';
-import { employees } from '../../services/api';
+import { employees, PaginationInfo, EmployeeTransaction } from '../../services/api';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 interface EmployeeTransactionsProps {
@@ -30,17 +31,17 @@ interface EmployeeTransactionsProps {
     onTransactionAdded: () => void;
 }
 
-interface Transaction {
-    id: number;
-    date: string;
-    type: 'salary' | 'bonus' | 'deduction' | 'advance';
-    amount: number;
-    description: string;
-}
-
 const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransactionsProps) => {
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [transactions, setTransactions] = useState<EmployeeTransaction[]>([]);
     const [showAddDialog, setShowAddDialog] = useState(false);
+    const [pagination, setPagination] = useState<PaginationInfo>({
+        currentPage: 1,
+        pageSize: 10,
+        totalPages: 1,
+        totalRecords: 0,
+        hasNextPage: false,
+        hasPreviousPage: false
+    });
     const [formData, setFormData] = useState({
         date: new Date().toISOString().split('T')[0],
         type: 'salary' as 'salary' | 'bonus' | 'deduction' | 'advance',
@@ -48,11 +49,12 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
         description: ''
     });
 
-    const loadTransactions = async () => {
+    const loadTransactions = async (page: number = 1, limit: number = 10) => {
         try {
-            const response = await employees.getTransactions(employeeId);
-            if (Array.isArray(response)) {
-                setTransactions(response);
+            const response = await employees.getTransactions(employeeId, { page, limit });
+            if (response.data && Array.isArray(response.data)) {
+                setTransactions(response.data);
+                setPagination(response.pagination);
             } else {
                 console.error('Unexpected API response format');
                 setTransactions([]);
@@ -66,6 +68,20 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
     useEffect(() => {
         loadTransactions();
     }, [employeeId]);
+
+    const handlePageChange = (
+        _event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
+        loadTransactions(newPage + 1, pagination.pageSize);
+    };
+
+    const handleRowsPerPageChange = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        const newLimit = parseInt(event.target.value, 10);
+        loadTransactions(1, newLimit);
+    };
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
@@ -87,8 +103,14 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
                 amount: parseFloat(formData.amount)
             });
             setShowAddDialog(false);
-            loadTransactions();
+            loadTransactions(pagination.currentPage, pagination.pageSize);
             onTransactionAdded();
+            setFormData({
+                date: new Date().toISOString().split('T')[0],
+                type: 'salary',
+                amount: '',
+                description: ''
+            });
         } catch (error) {
             console.error('Error adding transaction:', error);
         }
@@ -141,6 +163,15 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
                         )}
                     </TableBody>
                 </Table>
+                <TablePagination
+                    component="div"
+                    count={pagination.totalRecords}
+                    page={pagination.currentPage - 1}
+                    onPageChange={handlePageChange}
+                    rowsPerPage={pagination.pageSize}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                />
             </TableContainer>
 
             {/* Add Transaction Dialog */}
