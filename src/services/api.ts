@@ -69,7 +69,7 @@ export interface EmployeeTransaction {
     id?: number;
     employeeId?: number;
     amount: number;
-    type: 'salary' | 'bonus' | 'deduction' | 'advance';
+    transaction_type: 'salary' | 'bonus' | 'deduction' | 'advance';
     description: string;
     date: string;
 }
