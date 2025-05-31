@@ -44,7 +44,7 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
     });
     const [formData, setFormData] = useState({
         date: new Date().toISOString().split('T')[0],
-        type: 'salary' as 'salary' | 'bonus' | 'deduction' | 'advance',
+        transaction_type: 'salary' as 'salary' | 'bonus' | 'deduction' | 'advance',
         amount: '',
         description: ''
     });
@@ -107,7 +107,7 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
             onTransactionAdded();
             setFormData({
                 date: new Date().toISOString().split('T')[0],
-                type: 'salary',
+                transaction_type: 'salary',
                 amount: '',
                 description: ''
             });
@@ -199,7 +199,7 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
                                     <InputLabel>Type</InputLabel>
                                     <Select
                                         name="type"
-                                        value={formData.type}
+                                        value={formData.transaction_type}
                                         label="Type"
                                         onChange={handleChange}
                                     >
