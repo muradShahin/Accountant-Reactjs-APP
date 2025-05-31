@@ -145,12 +145,12 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
                                     <TableCell>
                                         {format(new Date(transaction.date), 'MMM dd, yyyy')}
                                     </TableCell>
-                                    <TableCell>{transaction.type}</TableCell>
+                                    <TableCell>{transaction.transaction_type}</TableCell>
                                     <TableCell>{transaction.description}</TableCell>
                                     <TableCell align="right" sx={{
-                                        color: transaction.type === 'deduction' ? 'error.main' : 'success.main'
+                                        color: transaction.transaction_type === 'deduction' || transaction.transaction_type === 'salary'  ? 'error.main' : 'success.main'
                                     }}>
-                                        {transaction.type === 'deduction' ? '-' : '+'}${transaction.amount}
+                                        {transaction.transaction_type === 'deduction' || transaction.transaction_type === 'salary'? '-' : '+'}${transaction.amount}
                                     </TableCell>
                                 </TableRow>
                             ))

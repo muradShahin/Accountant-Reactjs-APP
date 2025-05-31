@@ -82,7 +82,6 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ open, onClose, onEmployeeAd
                     />
                     <TextField
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
                         label="Email Address"
