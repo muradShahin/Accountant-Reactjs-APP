@@ -33,7 +33,7 @@ interface EmployeeTransactionsProps {
 interface Transaction {
     id: number;
     date: string;
-    type: 'salary' | 'bonus' | 'deduction' | 'advance';
+    transaction_type: 'salary' | 'bonus' | 'deduction' | 'advance';
     amount: number;
     description: string;
 }
@@ -123,12 +123,12 @@ const EmployeeTransactions = ({ employeeId, onTransactionAdded }: EmployeeTransa
                                     <TableCell>
                                         {format(new Date(transaction.date), 'MMM dd, yyyy')}
                                     </TableCell>
-                                    <TableCell>{transaction.type}</TableCell>
+                                    <TableCell>{transaction.transaction_type}</TableCell>
                                     <TableCell>{transaction.description}</TableCell>
                                     <TableCell align="right" sx={{
-                                        color: transaction.type === 'deduction' ? 'error.main' : 'success.main'
+                                        color: transaction.transaction_type === 'deduction' ? 'error.main' : 'success.main'
                                     }}>
-                                        {transaction.type === 'deduction' ? '-' : '+'}${transaction.amount}
+                                        {transaction.transaction_type === 'deduction' ? '-' : '+'}${transaction.amount}
                                     </TableCell>
                                 </TableRow>
                             ))
